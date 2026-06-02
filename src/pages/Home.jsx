@@ -7,8 +7,10 @@ function Home() {
   const [category, setCategory] = useState('All');
 
   // 2. Fetch data from your backend when the page loads
-  useEffect(() => {
-    fetch('http://localhost:5000/api/products')
+  const API_URL = import.meta.env.VITE_API_URL || '';
+
+ useEffect(() => {
+      fetch(`${API_URL}/api/products`)
       .then((res) => res.json())
       .then((data) => {
         console.log("Data received from backend:", data); // <-- ADD THIS LINE
