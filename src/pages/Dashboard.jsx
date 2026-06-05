@@ -52,11 +52,7 @@ function Dashboard() {
           {myItems.map((item) => (
             <div key={item._id} className="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-white p-4 rounded-lg shadow-sm border border-gray-100 gap-4">
               <div className="flex items-center gap-4">
-                <img 
-                  src={item.image} 
-                  alt={item.title} 
-                  className="w-20 h-20 object-cover rounded bg-gray-100" 
-                />
+                <div className="w-20 h-20 rounded bg-gray-100 flex-shrink-0" />
                 <div>
                   <h3 className="font-bold text-gray-800 text-lg">{item.title}</h3>
                   <p className="text-sm text-gray-500 mb-1">📍 {item.location}</p>
