@@ -54,11 +54,7 @@ function Home() {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {filteredProducts.map((product) => (
           <div key={product._id} className="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow flex flex-col justify-between">
-            <img 
-  src={product.image || 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII='} 
-  alt={product.title} 
-  className="w-full h-48 object-cover bg-gray-200" // This background color acts as your "blank" state
-/>
+            <img src={product.image} alt={product.title} className="w-full h-48 object-cover bg-gray-100" />
             <div className="p-4 flex-grow">
               <span className="text-xs font-semibold text-blue-900 uppercase bg-blue-50 px-2 py-0.5 rounded">
                 {product.category}
