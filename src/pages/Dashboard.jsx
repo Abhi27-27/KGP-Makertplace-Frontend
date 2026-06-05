@@ -53,10 +53,10 @@ function Dashboard() {
             <div key={item._id} className="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-white p-4 rounded-lg shadow-sm border border-gray-100 gap-4">
               <div className="flex items-center gap-4">
                 <img 
-                  src={item.image} 
-                  alt={item.title} 
-                  className="w-20 h-20 object-cover rounded bg-gray-100" 
-                />
+  src={product.image || 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII='} 
+  alt={product.title} 
+  className="w-full h-48 object-cover bg-gray-200" // This background color acts as your "blank" state
+/>
                 <div>
                   <h3 className="font-bold text-gray-800 text-lg">{item.title}</h3>
                   <p className="text-sm text-gray-500 mb-1">📍 {item.location}</p>
