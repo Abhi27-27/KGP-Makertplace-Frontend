@@ -32,11 +32,7 @@ function ProductDetails() {
       <Link to="/" className="text-blue-900 hover:underline mb-6 inline-block">&larr; Back to Listings</Link>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div>
-          <img
-            src={item.image || 'https://via.placeholder.com/600x400'}
-            alt={item.title}
-            className="w-full h-auto rounded-lg object-cover bg-gray-100"
-          />
+          <div className="w-20 h-20 rounded bg-gray-100 flex-shrink-0" />
         </div>
         <div className="flex flex-col justify-between">
           <div>
