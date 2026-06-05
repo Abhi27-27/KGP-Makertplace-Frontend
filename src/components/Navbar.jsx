@@ -30,14 +30,22 @@ function Navbar() {
               Sell Item
             </Link>
             
-            {/* If logged in, show Logout. If not, show Login. */}
+            {/* If logged in, show Dashboard and Logout. If not, show Login. */}
             {userInfo ? (
-              <button 
-                onClick={handleLogout} 
-                className="text-sm bg-red-600 text-white px-3 py-1.5 rounded hover:bg-red-700 transition-colors"
-              >
-                Logout
-              </button>
+              <>
+                <Link 
+                  to="/dashboard" 
+                  className="text-sm font-semibold hover:text-yellow-400 transition-colors"
+                >
+                  My Dashboard
+                </Link>
+                <button 
+                  onClick={handleLogout} 
+                  className="text-sm bg-red-600 text-white px-3 py-1.5 rounded hover:bg-red-700 transition-colors"
+                >
+                  Logout
+                </button>
+              </>
             ) : (
               <Link 
                 to="/auth" 

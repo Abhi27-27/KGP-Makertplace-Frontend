@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import ProductDetails from './pages/ProductDetails';
 import CreateListing from './pages/CreateListing';
 import Auth from './pages/Auth'; // <-- 1. MAKE SURE THIS IS HERE
+import Dashboard from './pages/Dashboard';
 
 function App() {
   return (
@@ -16,7 +17,8 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/product/:id" element={<ProductDetails />} />
             <Route path="/sell" element={<CreateListing />} />
-            <Route path="/auth" element={<Auth />} /> {/* <-- 2. MAKE SURE THIS IS HERE */}
+            <Route path="/auth" element={<Auth />} /> 
+            <Route path="/dashboard" element={<Dashboard />} />
           </Routes>
         </main>
       </div>

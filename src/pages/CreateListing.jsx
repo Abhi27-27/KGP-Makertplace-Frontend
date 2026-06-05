@@ -21,7 +21,7 @@ function CreateListing() {
     const user = JSON.parse(localStorage.getItem('userInfo'));  // adjust key if yours is different
     if (!user || !user._id) {
       alert('You must be logged in to list an item.');
-      navigate('/login');
+      navigate('/auth');
       return;
     }
 
