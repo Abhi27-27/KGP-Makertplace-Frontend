@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { getAuthHeaders } from '../utils/api';
 
 const CATEGORIES = ['Cycles', 'Books', 'Electronics', 'Academics'];
 
@@ -28,11 +29,8 @@ function CreateListing() {
       const API_URL = import.meta.env.VITE_API_URL || '';
       const response = await fetch(`${API_URL}/api/products`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          ...formData,
-          seller: user._id
-        })
+        headers: getAuthHeaders(),
+        body: JSON.stringify(formData),
       });
 
       const data = await response.json();

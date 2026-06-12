@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { getCategoryStyle } from '../utils/categoryStyles';
+import { getAuthHeaders } from '../utils/api';
 
 function Dashboard() {
   const [myItems, setMyItems] = useState([]);
@@ -11,7 +12,9 @@ function Dashboard() {
 
   useEffect(() => {
     if (userInfo && userInfo._id) {
-      fetch(`${API_URL}/api/products/user/${userInfo._id}`)
+      fetch(`${API_URL}/api/products/user/${userInfo._id}`, {
+        headers: getAuthHeaders(),
+      })
         .then((res) => res.json())
         .then((data) => {
           setMyItems(data);
@@ -31,6 +34,7 @@ function Dashboard() {
       try {
         const response = await fetch(`${API_URL}/api/products/${productId}`, {
           method: 'DELETE',
+          headers: getAuthHeaders(),
         });
 
         if (response.ok) {
