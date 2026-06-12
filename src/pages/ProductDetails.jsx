@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import { getCategoryStyle } from '../utils/categoryStyles';
 
 function ProductDetails() {
   const { id } = useParams();
@@ -24,44 +25,100 @@ function ProductDetails() {
     fetchProduct();
   }, [id]);
 
-  if (loading) return <p className="text-center mt-10 text-gray-500">Loading...</p>;
-  if (error)   return <p className="text-center mt-10 text-red-500">Error: {error}</p>;
-
-  return (
-    <div className="bg-white rounded-lg shadow-sm p-6 max-w-4xl mx-auto">
-      <Link to="/" className="text-blue-900 hover:underline mb-6 inline-block">&larr; Back to Listings</Link>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div>
-          <div className="w-20 h-20 rounded bg-gray-100 flex-shrink-0" />
-        </div>
-        <div className="flex flex-col justify-between">
-          <div>
-            <span className="text-xs font-bold text-blue-900 uppercase bg-blue-50 px-2 py-1 rounded">
-              {item.category}
-            </span>
-            <h1 className="text-3xl font-bold text-gray-900 mt-2">{item.title}</h1>
-            <p className="text-2xl font-black text-blue-900 mt-2">₹{item.price}</p>
-            <p className="text-sm text-gray-500 mt-1">
-              📍 Location: <span className="font-semibold">{item.location}</span>
-            </p>
-
-            <div className="border-t my-4 pt-4">
-              <h3 className="font-semibold text-gray-700">Description</h3>
-              <p className="text-gray-600 mt-1 text-sm leading-relaxed">{item.description}</p>
+  if (loading) {
+    return (
+      <div className="max-w-5xl mx-auto animate-pulse">
+        <div className="h-6 bg-slate-200 rounded w-32 mb-6" />
+        <div className="bg-white rounded-2xl p-6 shadow-sm">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="h-80 bg-slate-200 rounded-xl" />
+            <div className="space-y-4">
+              <div className="h-6 bg-slate-200 rounded w-24" />
+              <div className="h-10 bg-slate-200 rounded w-3/4" />
+              <div className="h-8 bg-slate-200 rounded w-1/3" />
+              <div className="h-32 bg-slate-200 rounded" />
             </div>
           </div>
+        </div>
+      </div>
+    );
+  }
 
-          <div className="bg-gray-50 p-4 rounded-lg border">
-            <h4 className="font-bold text-gray-800">Seller Information</h4>
-            {/* seller is populated from User model via .populate() in the backend */}
-            <p className="text-sm text-gray-600 mt-1">Name: {item.seller?.name}</p>
-            <p className="text-sm text-gray-600">Email: {item.seller?.email}</p>
-            <a
-              href={`mailto:${item.seller?.email}`}
-              className="block w-full mt-4 bg-yellow-500 hover:bg-yellow-600 text-blue-900 font-bold py-2 px-4 rounded transition-colors text-center"
-            >
-              Chat with Seller
-            </a>
+  if (error) {
+    return (
+      <div className="max-w-md mx-auto text-center py-16">
+        <div className="text-5xl mb-4">😕</div>
+        <p className="text-red-600 font-semibold">{error}</p>
+        <Link to="/" className="btn-primary mt-6 inline-flex">Back to Listings</Link>
+      </div>
+    );
+  }
+
+  const style = getCategoryStyle(item.category);
+
+  return (
+    <div className="max-w-5xl mx-auto">
+      <Link
+        to="/"
+        className="inline-flex items-center gap-1.5 text-sm font-medium text-brand-900 hover:text-brand-800 mb-6 transition-colors"
+      >
+        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+        </svg>
+        Back to Listings
+      </Link>
+
+      <div className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+        <div className="grid grid-cols-1 md:grid-cols-2">
+          <div className={`bg-gradient-to-br ${style.gradient} min-h-[280px] md:min-h-full flex items-center justify-center p-12`}>
+            <span className="text-8xl drop-shadow-lg">{style.icon}</span>
+          </div>
+
+          <div className="p-6 sm:p-8 flex flex-col">
+            <div className="flex-grow">
+              <span className={`inline-block text-xs font-bold uppercase px-3 py-1 rounded-full ${style.bg}`}>
+                {item.category}
+              </span>
+              <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-3 leading-tight">
+                {item.title}
+              </h1>
+              <p className="text-3xl font-black text-brand-900 mt-3">₹{item.price}</p>
+              <p className="text-sm text-slate-500 mt-2 flex items-center gap-1.5">
+                <svg className="w-4 h-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+                {item.location}
+              </p>
+
+              <div className="border-t border-slate-100 my-6 pt-6">
+                <h3 className="font-semibold text-slate-800 mb-2">Description</h3>
+                <p className="text-slate-600 text-sm leading-relaxed">{item.description}</p>
+              </div>
+            </div>
+
+            <div className="bg-slate-50 rounded-xl p-5 border border-slate-100 mt-4">
+              <h4 className="font-bold text-slate-800 flex items-center gap-2">
+                <svg className="w-5 h-5 text-brand-900" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+                Seller Information
+              </h4>
+              <div className="mt-3 space-y-1">
+                <p className="text-sm text-slate-600">
+                  <span className="font-medium text-slate-800">Name:</span> {item.seller?.name}
+                </p>
+                <p className="text-sm text-slate-600">
+                  <span className="font-medium text-slate-800">Email:</span> {item.seller?.email}
+                </p>
+              </div>
+              <a
+                href={`mailto:${item.seller?.email}`}
+                className="btn-accent w-full mt-5 !rounded-xl"
+              >
+                Contact Seller
+              </a>
+            </div>
           </div>
         </div>
       </div>
