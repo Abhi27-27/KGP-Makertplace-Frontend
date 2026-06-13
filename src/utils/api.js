@@ -8,3 +8,24 @@ export function getAuthHeaders() {
 
   return headers;
 }
+
+export function getUserInfo() {
+  try {
+    return JSON.parse(localStorage.getItem('userInfo'));
+  } catch {
+    return null;
+  }
+}
+
+export const API_URL = import.meta.env.VITE_API_URL || '';
+
+export async function apiFetch(url, options = {}) {
+  const response = await fetch(`${API_URL}${url}`, {
+    ...options,
+    headers: {
+      ...getAuthHeaders(),
+      ...options.headers,
+    },
+  });
+  return response;
+}

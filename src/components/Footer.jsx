@@ -11,7 +11,7 @@ function Footer() {
               KGP <span className="text-amber-500">Marketplace</span>
             </p>
             <p className="mt-2 text-sm text-slate-500 leading-relaxed">
-              Buy and sell within the IIT Kharagpur campus community — cycles, books, electronics, and more.
+              Buy and sell within the IIT Kharagpur campus community.
             </p>
           </div>
           <div>
@@ -19,18 +19,18 @@ function Footer() {
             <ul className="mt-3 space-y-2 text-sm">
               <li><Link to="/" className="text-slate-500 hover:text-blue-900 transition-colors">Browse Listings</Link></li>
               <li><Link to="/sell" className="text-slate-500 hover:text-blue-900 transition-colors">Sell an Item</Link></li>
-              <li><Link to="/dashboard" className="text-slate-500 hover:text-blue-900 transition-colors">My Dashboard</Link></li>
+              <li><Link to="/chat" className="text-slate-500 hover:text-blue-900 transition-colors">Messages</Link></li>
             </ul>
           </div>
           <div>
             <p className="text-sm font-semibold text-slate-900 uppercase tracking-wider">Campus Only</p>
             <p className="mt-3 text-sm text-slate-500 leading-relaxed">
-              Verified student marketplace for safe, local transactions across halls and departments.
+              Verified student marketplace for safe, local transactions.
             </p>
           </div>
         </div>
         <div className="mt-8 pt-6 border-t border-slate-100 text-center text-xs text-slate-400">
-          © {new Date().getFullYear()} KGP Marketplace · Built for the campus community
+          © {new Date().getFullYear()} KGP Marketplace
         </div>
       </div>
     </footer>

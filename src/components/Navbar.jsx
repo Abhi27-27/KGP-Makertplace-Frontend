@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useChat } from '../context/ChatContext';
+import { getUserInfo } from '../utils/api';
 
 function Navbar() {
   const navigate = useNavigate();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
-  const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+  const userInfo = getUserInfo();
+  const { unreadCount } = useChat();
 
   const handleLogout = () => {
     localStorage.removeItem('userInfo');
@@ -27,55 +29,42 @@ function Navbar() {
           </Link>
 
           <div className="hidden md:flex items-center gap-1">
-            <Link
-              to="/"
-              className="px-4 py-2 rounded-lg text-sm font-medium text-white/90 hover:text-white hover:bg-white/10 transition-colors"
-            >
+            <Link to="/" className="px-4 py-2 rounded-lg text-sm font-medium text-white/90 hover:text-white hover:bg-white/10 transition-colors">
               Browse
             </Link>
-            <Link
-              to="/sell"
-              className="ml-2 btn-accent !py-2 !px-4 !text-sm !rounded-lg"
-            >
+            <Link to="/sell" className="ml-2 btn-accent !py-2 !px-4 !text-sm !rounded-lg">
               Sell Item
             </Link>
 
+            {userInfo && (
+              <Link to="/chat" className="relative ml-2 px-4 py-2 rounded-lg text-sm font-medium text-white/90 hover:text-white hover:bg-white/10 transition-colors">
+                Messages
+                {unreadCount > 0 && (
+                  <span className="absolute -top-1 -right-1 min-w-[20px] h-5 px-1 flex items-center justify-center bg-red-500 text-white text-xs font-bold rounded-full">
+                    {unreadCount > 99 ? '99+' : unreadCount}
+                  </span>
+                )}
+              </Link>
+            )}
+
             {userInfo ? (
               <>
-                <Link
-                  to="/dashboard"
-                  className="ml-2 px-4 py-2 rounded-lg text-sm font-medium text-white/90 hover:text-white hover:bg-white/10 transition-colors"
-                >
+                <Link to="/dashboard" className="ml-2 px-4 py-2 rounded-lg text-sm font-medium text-white/90 hover:text-white hover:bg-white/10 transition-colors">
                   Dashboard
                 </Link>
-                <div className="ml-3 flex items-center gap-3 pl-3 border-l border-white/20">
-                  <span className="text-sm text-white/70 hidden lg:inline">
-                    {userInfo.name?.split(' ')[0] || 'User'}
-                  </span>
-                  <button
-                    onClick={handleLogout}
-                    className="text-sm bg-white/10 hover:bg-red-500/90 text-white px-3 py-1.5 rounded-lg transition-colors"
-                  >
-                    Logout
-                  </button>
-                </div>
+                <button onClick={handleLogout} className="ml-3 text-sm bg-white/10 hover:bg-red-500/90 text-white px-3 py-1.5 rounded-lg transition-colors">
+                  Logout
+                </button>
               </>
             ) : (
-              <Link
-                to="/auth"
-                className="ml-3 text-sm bg-white/10 hover:bg-white/20 border border-white/20 text-white px-4 py-2 rounded-lg transition-colors"
-              >
+              <Link to="/auth" className="ml-3 text-sm bg-white/10 hover:bg-white/20 border border-white/20 text-white px-4 py-2 rounded-lg transition-colors">
                 Login
               </Link>
             )}
           </div>
 
-          <div className="md:hidden flex items-center">
-            <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="p-2 rounded-lg text-white/80 hover:text-white hover:bg-white/10 focus:outline-none transition-colors"
-              aria-label="Toggle menu"
-            >
+          <div className="md:hidden">
+            <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="p-2 rounded-lg text-white/80 hover:text-white hover:bg-white/10" aria-label="Toggle menu">
               <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 {isMobileMenuOpen ? (
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -90,49 +79,20 @@ function Navbar() {
 
       {isMobileMenuOpen && (
         <div className="md:hidden bg-brand-800/98 backdrop-blur-md border-t border-white/10 px-4 pt-2 pb-4 space-y-1">
-          <Link
-            to="/"
-            onClick={() => setIsMobileMenuOpen(false)}
-            className="block px-3 py-2.5 rounded-lg text-base font-medium hover:bg-white/10 transition-colors"
-          >
-            Browse
-          </Link>
-          <Link
-            to="/sell"
-            onClick={() => setIsMobileMenuOpen(false)}
-            className="block px-3 py-2.5 rounded-lg text-base font-semibold bg-accent-500 text-brand-900 hover:bg-accent-600 transition-colors"
-          >
-            Sell Item
-          </Link>
-
+          <Link to="/" onClick={() => setIsMobileMenuOpen(false)} className="block px-3 py-2.5 rounded-lg text-base font-medium hover:bg-white/10">Browse</Link>
+          <Link to="/sell" onClick={() => setIsMobileMenuOpen(false)} className="block px-3 py-2.5 rounded-lg text-base font-semibold bg-accent-500 text-brand-900">Sell Item</Link>
+          {userInfo && (
+            <Link to="/chat" onClick={() => setIsMobileMenuOpen(false)} className="block px-3 py-2.5 rounded-lg text-base font-medium hover:bg-white/10">
+              Messages {unreadCount > 0 && `(${unreadCount})`}
+            </Link>
+          )}
           {userInfo ? (
             <>
-              <Link
-                to="/dashboard"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="block px-3 py-2.5 rounded-lg text-base font-medium hover:bg-white/10 transition-colors"
-              >
-                My Dashboard
-              </Link>
-              <div className="pt-3 mt-2 border-t border-white/10">
-                <button
-                  onClick={handleLogout}
-                  className="w-full text-left px-3 py-2.5 rounded-lg text-base font-semibold bg-red-500/90 hover:bg-red-600 transition-colors"
-                >
-                  Logout ({userInfo.name || 'User'})
-                </button>
-              </div>
+              <Link to="/dashboard" onClick={() => setIsMobileMenuOpen(false)} className="block px-3 py-2.5 rounded-lg hover:bg-white/10">Dashboard</Link>
+              <button onClick={handleLogout} className="w-full text-left px-3 py-2.5 rounded-lg bg-red-500/90 font-semibold">Logout</button>
             </>
           ) : (
-            <div className="pt-3 mt-2 border-t border-white/10">
-              <Link
-                to="/auth"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="block px-3 py-2.5 rounded-lg text-base font-medium bg-white/10 hover:bg-white/20 transition-colors"
-              >
-                Login / Sign Up
-              </Link>
-            </div>
+            <Link to="/auth" onClick={() => setIsMobileMenuOpen(false)} className="block px-3 py-2.5 rounded-lg bg-white/10">Login / Sign Up</Link>
           )}
         </div>
       )}
