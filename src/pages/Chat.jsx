@@ -22,7 +22,8 @@ function Chat() {
     if (conversationId) {
       withLoading(loadMessages(conversationId));
     }
-  }, [conversationId, userInfo, navigate, loadMessages, withLoading]);
+    // We removed loadMessages and withLoading from this list below!
+  }, [conversationId, userInfo, navigate]);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
