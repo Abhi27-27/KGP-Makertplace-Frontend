@@ -18,7 +18,8 @@ function Dashboard() {
           .catch((err) => console.error(err))
       );
     }
-  }, [userInfo, withLoading]);
+    // 🚨 CRITICAL FIX: Change userInfo to userInfo?._id
+  }, [userInfo?._id, withLoading]);
 
   const handleDelete = async (productId) => {
     if (!window.confirm('Are you sure you want to delete this listing?')) return;
