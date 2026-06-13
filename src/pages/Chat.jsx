@@ -15,15 +15,20 @@ function Chat() {
   const bottomRef = useRef(null);
 
   useEffect(() => {
+    // 1. If there's no user, redirect immediately
     if (!userInfo) {
       navigate('/auth');
       return;
     }
+    
+    // 2. If we have a conversation selected, load the messages
     if (conversationId) {
       withLoading(loadMessages(conversationId));
     }
-    // We removed loadMessages and withLoading from this list below!
-  }, [conversationId, userInfo, navigate]);
+    
+    // 🚨 CRITICAL FIX: We use userInfo?._id (a simple string) 
+    // instead of the whole userInfo object to stop the infinite memory loop!
+  }, [conversationId, navigate, userInfo?._id]);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
