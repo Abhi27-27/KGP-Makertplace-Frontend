@@ -18,7 +18,7 @@ function Dashboard() {
           .catch((err) => console.error(err))
       );
     }
-    // 🚨 CRITICAL FIX: Change userInfo to userInfo?._id
+    
   }, [userInfo?._id, withLoading]);
 
   const handleDelete = async (productId) => {

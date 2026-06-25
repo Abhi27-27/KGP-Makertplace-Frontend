@@ -15,19 +15,19 @@ function Chat() {
   const bottomRef = useRef(null);
 
   useEffect(() => {
-    // 1. If there's no user, redirect immediately
+    
     if (!userInfo) {
       navigate('/auth');
       return;
     }
     
-    // 2. If we have a conversation selected, load the messages
+    
     if (conversationId) {
       withLoading(loadMessages(conversationId));
     }
     
-    // 🚨 CRITICAL FIX: We use userInfo?._id (a simple string) 
-    // instead of the whole userInfo object to stop the infinite memory loop!
+    
+    
   }, [conversationId, navigate, userInfo?._id]);
 
   useEffect(() => {
@@ -66,7 +66,7 @@ function Chat() {
       <h2 className="text-2xl font-extrabold text-slate-900 mb-6">Messages</h2>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 h-[calc(100vh-220px)] min-h-[480px]">
-        {/* Conversation list */}
+        {}
         <div className="md:col-span-1 bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden flex flex-col">
           <div className="p-4 border-b border-slate-100 font-semibold text-slate-700">Conversations</div>
           <div className="flex-1 overflow-y-auto">
@@ -101,7 +101,7 @@ function Chat() {
           </div>
         </div>
 
-        {/* Chat window */}
+        {}
         <div className="md:col-span-2 bg-white rounded-2xl border border-slate-100 shadow-sm flex flex-col overflow-hidden">
           {!conversationId ? (
             <div className="flex-1 flex items-center justify-center text-slate-400">

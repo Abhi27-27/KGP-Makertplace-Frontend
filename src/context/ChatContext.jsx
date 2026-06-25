@@ -110,22 +110,22 @@ export function ChatProvider({ children }) {
       const data = await res.json();
       setMessages(data);
       
-      // Update conversations and unread count safely without depending on external state
+      
       setConversations((prev) => {
         const conv = prev.find((x) => x._id === conversationId);
         
-        // Subtract this conversation's unread messages from the total count
+        
         if (conv && conv.unreadCount > 0) {
           setUnreadCount((c) => Math.max(0, c - conv.unreadCount));
         }
         
-        // Return the updated conversations list
+        
         return prev.map((c) => (c._id === conversationId ? { ...c, unreadCount: 0 } : c));
       });
       
       socketRef.current?.emit('mark_read', { conversationId });
     }
-  }, []); // <-- EMPTY ARRAY STOPS THE LOOP!
+  }, []); 
 
   const sendMessage = useCallback((conversationId, text) => {
     socketRef.current?.emit('send_message', { conversationId, text });
