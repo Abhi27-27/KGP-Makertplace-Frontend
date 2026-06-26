@@ -125,6 +125,7 @@ function EditModal({ item, onClose, onSave }) {
 function Account() {
   const [myItems, setMyItems] = useState([]);
   const [editingItem, setEditingItem] = useState(null);
+  const [profile, setProfile] = useState(null);
   const userInfo = getUserInfo();
   const { withLoading } = useLoading();
 
@@ -133,6 +134,14 @@ function Account() {
 
   useEffect(() => {
     if (!userInfo?._id) return;
+
+    withLoading(
+      fetch(`${API_URL}/api/auth/me`, { headers: getAuthHeaders() })
+        .then((res) => res.json())
+        .then(setProfile)
+        .catch(console.error)
+    );
+
     withLoading(
       fetch(`${API_URL}/api/products/user/${userInfo._id}`, { headers: getAuthHeaders() })
         .then((res) => res.json())
@@ -201,8 +210,8 @@ function Account() {
     );
   }
 
-  const joinYear = userInfo.createdAt
-    ? new Date(userInfo.createdAt).getFullYear()
+  const joinYear = profile?.createdAt
+    ? new Date(profile.createdAt).getFullYear()
     : new Date().getFullYear();
 
   return (
@@ -232,9 +241,8 @@ function Account() {
           </div>
 
           <div className="divide-y divide-slate-50">
-            <InfoRow label="Email" value={userInfo.email} />
-            <InfoRow label="Roll No." value={userInfo.rollNumber} />
-            <InfoRow label="Hall" value={userInfo.hall} />
+            <InfoRow label="Email" value={profile?.email ?? userInfo.email} />
+            <InfoRow label="Roll No." value={profile?.rollNumber ?? '—'} />
             <InfoRow label="Member Since" value={`Class of ${joinYear}`} />
           </div>
         </div>
