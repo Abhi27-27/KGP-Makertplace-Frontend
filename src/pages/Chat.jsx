@@ -28,7 +28,7 @@ function Chat() {
     
     
     
-  }, [conversationId, navigate, userInfo?._id]);
+  }, [conversationId, navigate, userInfo?._id, withLoading, loadMessages]);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' });

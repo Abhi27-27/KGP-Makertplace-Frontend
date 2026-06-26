@@ -9,7 +9,7 @@ import Home from './pages/Home';
 import ProductDetails from './pages/ProductDetails';
 import CreateListing from './pages/CreateListing';
 import Auth from './pages/Auth';
-import Dashboard from './pages/Dashboard';
+import Account from './pages/Dashboard';
 import Chat from './pages/Chat';
 
 function App() {
@@ -26,7 +26,7 @@ function App() {
                 <Route path="/product/:id" element={<ProductDetails />} />
                 <Route path="/sell" element={<CreateListing />} />
                 <Route path="/auth" element={<Auth />} />
-                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/account" element={<Account />} />
                 <Route path="/chat" element={<Chat />} />
                 <Route path="/chat/:conversationId" element={<Chat />} />
               </Routes>

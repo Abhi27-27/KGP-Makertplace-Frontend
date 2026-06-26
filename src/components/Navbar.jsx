@@ -49,8 +49,8 @@ function Navbar() {
 
             {userInfo ? (
               <>
-                <Link to="/dashboard" className="ml-2 px-4 py-2 rounded-lg text-sm font-medium text-white/90 hover:text-white hover:bg-white/10 transition-colors">
-                  Dashboard
+                <Link to="/account" className="ml-2 px-4 py-2 rounded-lg text-sm font-medium text-white/90 hover:text-white hover:bg-white/10 transition-colors">
+                  Account
                 </Link>
                 <button onClick={handleLogout} className="ml-3 text-sm bg-white/10 hover:bg-red-500/90 text-white px-3 py-1.5 rounded-lg transition-colors">
                   Logout
@@ -88,7 +88,7 @@ function Navbar() {
           )}
           {userInfo ? (
             <>
-              <Link to="/dashboard" onClick={() => setIsMobileMenuOpen(false)} className="block px-3 py-2.5 rounded-lg hover:bg-white/10">Dashboard</Link>
+              <Link to="/account" onClick={() => setIsMobileMenuOpen(false)} className="block px-3 py-2.5 rounded-lg hover:bg-white/10">Account</Link>
               <button onClick={handleLogout} className="w-full text-left px-3 py-2.5 rounded-lg bg-red-500/90 font-semibold">Logout</button>
             </>
           ) : (
