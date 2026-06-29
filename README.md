@@ -1,149 +1,96 @@
-# 🛒 KGP Marketplace — Frontend
+# Campus Marketplace - Frontend
 
-<div align="center">
+A buy and sell marketplace for a campus. Students post items in a few categories,
+browse listings, and chat with each other in real time to negotiate, with live
+notifications and unread message counts. Sellers manage their own listings and mark
+them sold.
 
-![KGP Marketplace](https://img.shields.io/badge/KGP-Marketplace-1e3a8a?style=for-the-badge&logo=react&logoColor=white)
-![React](https://img.shields.io/badge/React-18-61DAFB?style=for-the-badge&logo=react&logoColor=black)
-![Vite](https://img.shields.io/badge/Vite-5-646CFF?style=for-the-badge&logo=vite&logoColor=white)
-![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)
+This is the frontend repo, built with React and Vite. It talks to a separate Node and
+Express backend.
 
-**A peer-to-peer campus marketplace for IIT Kharagpur students**
+## Tech stack
 
-[🌐 Live Demo](https://kgp-makertplace-frontend.vercel.app/) · [⚙️ Backend Repo](https://github.com/Abhi27-27/KGP-Makertplace-backend) · [🐛 Report Bug](https://github.com/Abhi27-27/KGP-Makertplace-Frontend/issues)
+- React with Vite
+- React Router for navigation
+- socket.io-client for real-time chat
+- Context API for chat state
+- Tailwind CSS for styling
 
-</div>
+## Features
 
----
+- Account sign up and login
+- Post items in four categories: cycles, books, electronics and academics
+- Browse and filter active listings
+- Real-time chat between buyers and sellers
+- Browser notifications for new messages
+- Unread message counts per conversation
+- A dashboard to edit, delete or mark your own listings sold
 
-## 📌 Overview
+## How it connects to the backend
 
-KGP Marketplace is a full-stack web application that enables IIT Kharagpur students to buy and sell items — cycles, books, electronics, and academic essentials — within the campus community. This repository contains the **React frontend**.
+Listings and auth go over normal REST calls. The chat uses a Socket.io connection
+that is opened with the user's token.
 
----
+When you open a chat on an item, the app asks the backend for the conversation for
+that buyer, seller and item (or creates one). Messages then arrive over the socket
+and appear instantly. New messages also trigger a browser notification and update the
+unread count.
 
-## 🚀 Live Demo
+```
+you send a message -> socket -> backend -> appears on the other person's screen
+```
 
-> **Deployed on Vercel:** [https://kgp-makertplace-frontend.vercel.app/](https://kgp-makertplace-frontend.vercel.app/)
-
----
-
-## ✨ Features
-
-- 🔐 **JWT Authentication** — Secure login and registration with roll number verification
-- 🛍️ **Browse & Filter Listings** — Search by title and filter by category in real time
-- 📦 **Create & Delete Listings** — Post items with title, price, category, location, and description
-- 💬 **Real-Time Chat** — Socket.io-powered messaging between buyers and sellers
-- 🔔 **Browser Notifications** — Instant alerts for new messages even when not on the chat page
-- 🔴 **Unread Badge Counter** — Live unread message count shown in the navbar
-- 📊 **Seller Dashboard** — View and manage all your active listings
-- 📱 **Fully Responsive** — Mobile-first design with a hamburger menu
-
----
-
-## 🛠️ Tech Stack
-
-| Category | Technology |
-|---|---|
-| Framework | React 18 |
-| Build Tool | Vite |
-| Styling | Tailwind CSS v4 |
-| Routing | React Router DOM v6 |
-| Real-Time | Socket.io Client |
-| State Management | React Context API |
-| HTTP | Fetch API |
-| Deployment | Vercel |
-
----
-
-## 📁 Project Structure
+## Project structure
 
 ```
 src/
-├── components/
-│   ├── Navbar.jsx          # Sticky navbar with unread badge
-│   ├── Footer.jsx          # Site footer with quick links
-│   └── LoadingSpinner.jsx  # Global loading overlay
-├── context/
-│   ├── ChatContext.jsx     # Socket.io + conversations state
-│   └── LoadingContext.jsx  # Global loading state
-├── pages/
-│   ├── Home.jsx            # Browse & filter listings
-│   ├── ProductDetails.jsx  # Single product view + chat CTA
-│   ├── CreateListing.jsx   # New listing form
-│   ├── Dashboard.jsx       # User's listings management
-│   ├── Auth.jsx            # Login / Sign up
-│   └── Chat.jsx            # Real-time messaging UI
-└── utils/
-    ├── api.js              # API base URL + auth headers helper
-    └── categoryStyles.js   # Category gradient/icon/color map
+  main.jsx                 entry point, wraps the app in the providers
+  App.jsx                  routes
+  context/
+    ChatContext.jsx        opens the socket, tracks messages and unread counts
+    LoadingContext.jsx
+  utils/
+    api.js                 API base URL and a fetch helper that adds the token
+    categoryStyles.js      the four categories and their styles
+  pages/
+    Home.jsx               browse and filter listings
+    CreateListing.jsx      the sell form
+    ProductDetails.jsx     view an item and start a chat
+    Chat.jsx               the messaging screen
+    Dashboard.jsx          your own listings
+    Auth.jsx               login and register
 ```
 
----
-
-## ⚙️ Getting Started
+## Getting started
 
 ### Prerequisites
 
-- Node.js v18+
-- Backend server running (see [Backend Repo](https://github.com/Abhi27-27/KGP-Makertplace-backend))
+- Node.js 18 or newer
+- The backend running (locally or deployed)
 
-### Installation
+### Install and run
 
 ```bash
-# 1. Clone the repository
-git clone https://github.com/Abhi27-27/KGP-Makertplace-Frontend.git
-cd KGP-Makertplace-Frontend
-
-# 2. Install dependencies
 npm install
-
-# 3. Create environment file
-cp .env.example .env
+npm run dev
 ```
 
-### Environment Variables
+Vite starts the dev server on http://localhost:5173.
 
-Create a `.env` file in the root:
+### Environment variables
+
+Set the backend URL in a `.env` file:
 
 ```env
 VITE_API_URL=http://localhost:5000
 ```
 
-> For production, set `VITE_API_URL` to your deployed backend URL.
-
-### Run Locally
+## Build and deploy
 
 ```bash
-npm run dev
+npm run build
 ```
 
-App runs at `http://localhost:5173`
-
----
-
-## 🔗 Backend
-
-This frontend connects to the KGP Marketplace REST API + WebSocket server.
-
-> **Backend Repository:** [https://github.com/Abhi27-27/KGP-Makertplace-backend](https://github.com/Abhi27-27/KGP-Makertplace-backend)
-
-Make sure the backend is running before starting the frontend locally.
-
----
-
-## 🚢 Deployment
-
-This project is deployed on **Vercel**. The `vercel.json` rewrite rule ensures all routes fall back to `index.html` for client-side routing:
-
-```json
-{
-  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
-}
-```
-
----
-
-
-<div align="center">
-Made by <a href="https://github.com/Abhi27-27">Marreddy Abhiram Muni Reddy</a> · IIT Kharagpur
-</div>
+This produces a static build in `dist/` that can be hosted on Vercel or Netlify.
+Point the backend URL at your deployed server, and make sure the server allows this
+site's URL in its CORS settings.
